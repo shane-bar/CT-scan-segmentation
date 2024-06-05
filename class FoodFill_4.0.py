@@ -86,6 +86,7 @@ class FloodFill(tk.Tk):
         self.bouton.bind('<Button-1>',self.select_axis)
         self.bouton.pack()
         
+        #tailles de la zone restrainte pour la segmentation
         self.distance_x = 80 #hauteur en coronal pour une image non transposé / largeur en réalité
         self.distance_y = 60 #corresponds au profondeur en coronal
         self.distance_z = 30
@@ -106,6 +107,7 @@ class FloodFill(tk.Tk):
         self.bouton_distance.bind('<Button-1>',self.get_distance)
         self.bouton_distance.pack()
         
+        #tolérance de floodfill algorithme
         self.tolerance = 3
         self.tolerance_ = tk.Entry()
         self.tolerance_.insert(0, "tolerance")
@@ -118,6 +120,8 @@ class FloodFill(tk.Tk):
         self.segment_button = tk.Label(text="Click on the organ on the original image to segment")
         #self.segment_button.bind('<Button-1>', self.flood_fill_segmentation)
         self.segment_button.pack(side=tk.TOP, pady=5)
+        
+        #initialisation de tous les variables
         self.seed_point = None
 
         self.displayed_slice = None
@@ -133,6 +137,7 @@ class FloodFill(tk.Tk):
 
         self.orig_canvas.bind("<Button-1>", self.flood_fill_segmentation)
         
+        #bouton pour enregistrer
         self.save_as = tk.Entry()
         self.save_as.insert(0, "save name")
         self.save_as.pack()
@@ -143,6 +148,19 @@ class FloodFill(tk.Tk):
 
 
     def flood_fill_segmentation(self,event):
+        """
+        
+
+        Parameters
+        ----------
+        event : un clic gauche ou droit sur la zone de l'image à segmenter
+            Il est relié au canvas de la zone de l'image originale'
+
+        Returns
+        -------
+        Il actualise la segmentation à chaque clic.
+
+        """
         index_choisi = self.index.get()
         print(f"Clicked at: x={event.y}, y={event.x}")
         milieu = (int(event.y), int(event.x))  # Note: z-index is included
@@ -177,6 +195,19 @@ class FloodFill(tk.Tk):
 
     # load image    
     def load_image(self, event):
+            """
+        
+
+        Parameters
+        ----------
+        event : Clic sur le bouton "load image"
+        
+        !!!! Le chemin est adapté à un ordi, il faudra adapter le case_file_path pour que le numéro de cas sufisse à avoir accès à l'image'
+        Returns
+        -------
+        Actualise l'image à segmenter selectionné.
+
+        """
             if self.case_number.get() != None:
                 case = self.case_number.get()
                 print(case)
@@ -199,6 +230,18 @@ class FloodFill(tk.Tk):
             self.original_image = image
 
     def save_segmentation(self, event):
+        """
+    
+
+        Parameters
+        ----------
+        event : Clic sur le bouton "save segmentation"
+        
+        Returns
+        -------
+        enregistre l'image segmentée sur le bureau de l'utilisateur.
+    
+        """
         # retransforer en image nii
         case = self.case_number.get()
         segmented_image_nii = nib.Nifti1Image(self.segmented_image, self.original_image.affine)
@@ -209,14 +252,17 @@ class FloodFill(tk.Tk):
         print(f'saved as {segmented_image_nii.get_filename()}')
        
     def get_distance(self, event):
+        """ prend les distances données par l'utilisateur sur l'interface"""
         self.distance_x = int(self.distance_x_entry.get())
         self.distance_y = int(self.distance_y_entry.get())
         self.distance_z = int(self.distance_z_entry.get())
     
     def get_tolerance(self, event):
+        """ prend la tolérance à prendre en compte donnée par l'utilisateur sur l'interface"""
         self.tolerance = int(self.tolerance_.get())
         
     def select_axis(self, event):
+            """permet de sélectionner la coupe voulu"""
             if self.axis.get() == "profile":
                 #le scale a autant de chiffres que la taile en x
                 self.slice = 'x'                
@@ -235,6 +281,16 @@ class FloodFill(tk.Tk):
             # print(maxi)
               
     def bind_scale_segm(self,event):
+            """
+            Parameters
+            ----------
+            event : déplacement de curseur
+    
+            Returns
+            -------
+            pemet d'associer le numéro affiché sur le curseur à l'index de coupe de l'image voulu pour l'image segmentée: c'est le 2è curseur
+    
+            """
             slice_index = self.index_segm.get()
             
             if self.axis.get() == "profile":
@@ -257,6 +313,16 @@ class FloodFill(tk.Tk):
             self.labels = np.zeros((self.displayed_slice_segm_tk.height, self.displayed_slice_segm_tk.width), dtype=np.int32)
         
     def bind_scale_orig(self,event):
+            """
+            Parameters
+            ----------
+            event : déplacement de curseur
+    
+            Returns
+            -------
+            pemet d'associer le numéro affiché sur le curseur à l'index de coupe de l'image voulu pour l'image originale: 1er curseur
+    
+            """
             slice_index = self.index.get()
             
             if self.axis.get() == "profile":
