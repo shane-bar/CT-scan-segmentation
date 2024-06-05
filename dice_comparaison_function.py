@@ -2,7 +2,7 @@
 """
 Created on Fri May 24 12:59:28 2024
 
-@author: matta
+@author: Adam Mattarozzi
 """
 
 import seg_metrics.seg_metrics as sg
