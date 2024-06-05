@@ -2,7 +2,7 @@
 """
 Created on Mon Jun  3 10:56:57 2024
 
-@author: shane
+@author: Shane Bartissol
 
 
 ### Manuel D'utilisation ###
