@@ -9,17 +9,13 @@ Created on Mon Jun  3 10:56:57 2024
     
     -Faire en sorte de pip install les package nécessaires
     
-    
-    
-    
-    
     -Pour choisir un slice different => voir ligne 97
     
     -Pour choisir un plan de coup different => voir ligne 98 (pour toujours avoir une image assez grande pour être segmentée utiliser la vue axial: im_data[: , : ,slice_index])
     
     -Sur l'interface :  -Load Image => il faut utiliser un fichier .nii
                         -Sur chacque organe qu'il faut segmenter = > utliser un seed different (ajuster le brush pour des petits organes)
-                        -Placer les backround seed autour des organes 
+                        -Placer les backround seeds autour des organes 
                         -Cliquer sur segment pour finaliser
                         
     -La segmentation sera sauvegarder dans le même dossier que l'image d'origine (si il y a des problèmes c'est prossible de retirer la fonction save segmented image')
