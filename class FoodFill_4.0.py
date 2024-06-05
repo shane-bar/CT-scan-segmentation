@@ -4,7 +4,25 @@ Created on Sat Jun  1 02:38:02 2024
 
 @author: Kananila
 """
+"""
+Étapes pour faire tourner le programme: 
+Avant de lancer:
+    - Modifier les chemins d’accès sur la ligne 232 du code 
+Après lancement:
+    - Donner les 3 derniers chiffres du numéro de cas voulu
+    - Appuyer sur load image
+    - Sélectionner le vu de visualisation
+    - Scroller en utilisant le 1er curseur 
+    - Dès que vous appuyez sur un organe sur l’image original, vous pouvez avoir accès à la segmentation de ce dernier sur la deuxième partie de la fenêtre intitulée “Segmented image”. La segmentation en 3D est observable en utilisant le deuxième curseur à droite.
+    - La segmentation s’actualise à chaque fois qu’un clic a eu lieu sur l’image original
+    - La taille de la zone 3D à segmenter peut être modifiée manuellement sur l’interface mais la taille par défaut correspond à celle du foie.
+    - En fonction de la segmentation effectuée, modifier la tolérance.
+    pour enregistrer une segmentation, lui donner un nom et appuyer sur “save segmentation”
+Conseils d’utilisation:
+    - Cliquer au milieu de l’organe à segmenter.
+La vue axiale ne semble pas marcher
 
+"""
 import tkinter as tk
 from tkinter import scrolledtext
 import nibabel as nib
